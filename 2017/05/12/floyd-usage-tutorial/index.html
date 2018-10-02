@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="工欲善其事，必先利其器  第一部分 入门随着 『deel learning』 学习深入，愈发觉得电脑力不从心，训练一层 『hidden layer』 的时间还能忍受，多层或者更复杂的模型所花费的时间动辄几十分钟，甚至几小时。等待虽然美好，可是太煎熬，何况谁也不能保证一次就能得到最好的结果，反复折磨下来肯定身心疲惫。 因此，自己买不了好的显卡，只能用别人的资源，当然是有偿使用哈。加入 Udacit">
+<meta name="keywords" content="Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Floyd 使用教程">
+<meta property="og:url" content="http://yoursite.com/2017/05/12/floyd-usage-tutorial/index.html">
+<meta property="og:site_name" content="坏记性就要记">
+<meta property="og:description" content="工欲善其事，必先利其器  第一部分 入门随着 『deel learning』 学习深入，愈发觉得电脑力不从心，训练一层 『hidden layer』 的时间还能忍受，多层或者更复杂的模型所花费的时间动辄几十分钟，甚至几小时。等待虽然美好，可是太煎熬，何况谁也不能保证一次就能得到最好的结果，反复折磨下来肯定身心疲惫。 因此，自己买不了好的显卡，只能用别人的资源，当然是有偿使用哈。加入 Udacit">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-02T11:02:46.392Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Floyd 使用教程">
+<meta name="twitter:description" content="工欲善其事，必先利其器  第一部分 入门随着 『deel learning』 学习深入，愈发觉得电脑力不从心，训练一层 『hidden layer』 的时间还能忍受，多层或者更复杂的模型所花费的时间动辄几十分钟，甚至几小时。等待虽然美好，可是太煎熬，何况谁也不能保证一次就能得到最好的结果，反复折磨下来肯定身心疲惫。 因此，自己买不了好的显卡，只能用别人的资源，当然是有偿使用哈。加入 Udacit">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/12/floyd-usage-tutorial/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Floyd 使用教程 | 坏记性就要记</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坏记性就要记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/floyd-usage-tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鞠汶成">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坏记性就要记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Floyd 使用教程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-12 08:11:37" itemprop="dateCreated datePublished" datetime="2017-05-12T08:11:37+08:00">2017-05-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>工欲善其事，必先利其器</p>
+</blockquote>
+<h1 id="第一部分-入门"><a href="#第一部分-入门" class="headerlink" title="第一部分 入门"></a>第一部分 入门</h1><p>随着 『deel learning』 学习深入，愈发觉得电脑力不从心，训练一层 『hidden layer』 的时间还能忍受，多层或者更复杂的模型所花费的时间动辄几十分钟，甚至几小时。等待虽然美好，可是太煎熬，何况谁也不能保证一次就能得到最好的结果，反复折磨下来肯定身心疲惫。</p>
+<p>因此，自己买不了好的显卡，只能用别人的资源，当然是有偿使用哈。加入 <a href="https://www.udacity.com" target="_blank" rel="noopener">Udacity</a> 课程后，收到 <a href="https://aws.amazon.com" target="_blank" rel="noopener">AWS</a> 云服务器的 $100 优惠券，可以直接使用的。按照课程介绍创建了 G2 型服务器，操作起来有点复杂，价格也不便宜。后来在论坛里看到 <a href="https://www.floydhub.com/" target="_blank" rel="noopener">Floyd</a> 的介绍，又去申请注册了账户，能领取 100 小时的免费 GPU 使用。目前为止使用体验不错，特记录下使用过程中遇到的问题。（申请账户的过程就省略了）</p>
+<a id="more"></a>
+<h2 id="配置-floyd-运行环境"><a href="#配置-floyd-运行环境" class="headerlink" title="配置 floyd 运行环境"></a>配置 floyd 运行环境</h2><p>申请账户之后，需要在本地配置 floyd-cli 。<a href="https://www.floydhub.com/welcome" target="_blank" rel="noopener">官方文档</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 cli</span></span><br><span class="line">pip install -U floyd-cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录账户</span></span><br><span class="line">floyd login</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝授权码到终端</span></span><br><span class="line"><span class="comment"># 输入登录命令后会提示你授权码页面将打开您的浏览器，是否打开，输入y 即可</span></span><br></pre></td></tr></table></figure>
+<h2 id="项目-Hello-World"><a href="#项目-Hello-World" class="headerlink" title="[项目] Hello World!"></a>[项目] Hello World!</h2><p>官方文档是训练一个 RNN 模型，为了简化过程我们输出一个 <code>Hello World!</code>吧。在本地创建文件夹 <code>floyd-tutorial</code> ，<br>然后创建 <code>hello.py</code> ，输入如下内容：</p>
+<script src="//gist.github.com/juwencheng/143b22536997cd0757491e044206cf4d.js"></script>
+<p>现在目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">└── hello.py</span><br><span class="line"></span><br><span class="line">0 directories, 1 file</span><br></pre></td></tr></table></figure>
+<h3 id="使用-floyd-初始化工程"><a href="#使用-floyd-初始化工程" class="headerlink" title="使用 floyd 初始化工程"></a>使用 floyd 初始化工程</h3><p>确保当前位置是在刚创建文件夹下面。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd init hello</span><br></pre></td></tr></table></figure>
+<p>现在目录结构如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .floydexpt</span><br><span class="line">├── .floydignore</span><br><span class="line">└── hello.py</span><br><span class="line"></span><br><span class="line">0 directories, 3 files</span><br></pre></td></tr></table></figure>
+<p>可以看到多了两个 floyd 的配置文件。第二个文件应该很熟悉，和 <code>.gitignore</code> 作用类似，即排除不需要传到 floyd 服务器的文件。</p>
+<h3 id="在-floyd-执行代码"><a href="#在-floyd-执行代码" class="headerlink" title="在 floyd 执行代码"></a>在 floyd 执行代码</h3><p>floyd 会将本地代码传到服务器，并在执行你的代码（从日志中可以看到，服务端使用的是 <code>docker</code> 技术）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run</span><br></pre></td></tr></table></figure>
+<p>如果提示没有登录，先执行 <code>floyd login</code> ，成功之后再执行 <code>floyd run</code> 。返回结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Creating project run. Total upload size: 328.0B</span><br><span class="line">Syncing code ...</span><br><span class="line">Done=============================] 1177/1177 - 00:00:00</span><br><span class="line">RUN ID                  NAME              VERSION</span><br><span class="line">----------------------  --------------  ---------</span><br><span class="line">Y65Vm9BqhB7CvvNZNs3yHN  owenju/hello:1          1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">To view logs enter:</span><br><span class="line">    floyd logs Y65Vm9BqhB7CvvNZNs3yHN</span><br></pre></td></tr></table></figure>
+<h3 id="查看运行结果"><a href="#查看运行结果" class="headerlink" title="查看运行结果"></a>查看运行结果</h3><p>运行查看日志命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd logs Y65Vm9BqhB7CvvNZNs3yHN</span><br></pre></td></tr></table></figure>
+<p>可以看到如下输入（截取部分）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">################################################################################</span></span><br><span class="line"></span><br><span class="line">2017-05-11 17:36:41,858 INFO - Run Output:</span><br><span class="line">2017-05-11 17:36:41,891 INFO - Hello World!</span><br><span class="line">2017-05-11 17:36:41,892 INFO - 你好!</span><br><span class="line">2017-05-11 17:36:41,931 INFO -</span><br><span class="line"><span class="comment">################################################################################</span></span><br></pre></td></tr></table></figure>
+<p>和预期输出一样。代码请戳<a href="https://github.com/owenju/floyd-tutorial" target="_blank" rel="noopener">floyd-tutorial</a>。</p>
+<h2 id="项目-jupyter-notebook"><a href="#项目-jupyter-notebook" class="headerlink" title="[项目] jupyter notebook"></a>[项目] jupyter notebook</h2><p>jupyter notebook 有很多优点，唯一的缺点就是没及时关闭会一直计费。jupyter notebook 启动后服务器便为你分配所需资源，所以即使你没有操作 notebook 也会收费。</p>
+<p>因此我的使用习惯是，在 floyd 上运行 python 代码。代码执行完就会自动结束。</p>
+<p>下面演示在 floyd 以 jupyter notebook 模式运行。首先你需要创建一个 <code>hello.ipynb</code> 文件（也可以是任何 ipynb 文件）。也可以直接从<a href="https://github.com/owenju/floyd-tutorial" target="_blank" rel="noopener">这里</a>下载，记得下载时选择 notebook 分支。</p>
+<p>先看看目前文件的目录结构</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .floydexpt</span><br><span class="line">├── .floydignore</span><br><span class="line">├── .ipynb_checkpoints</span><br><span class="line">│   └── hello-checkpoint.ipynb</span><br><span class="line">├── README.md</span><br><span class="line">├── hello.ipynb</span><br><span class="line">└── hello.py</span><br></pre></td></tr></table></figure>
+<p>多了 hello.ipynb 和 .ipynb_checkpoints 文件夹。执行下面命令以 jupyter notebook 方式在 floyd 运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run --mode jupyter</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Creating project run. Total upload size: 15.4KiB</span><br><span class="line">Syncing code ...</span><br><span class="line">Done=============================] 22594/22594 - 00:00:04</span><br><span class="line">RUN ID                  NAME              VERSION</span><br><span class="line">----------------------  --------------  ---------</span><br><span class="line">qUKFxLZEuQsM5FZDgGxaL5  owenju/hello:2          2</span><br><span class="line"></span><br><span class="line">Setting up your instance and waiting <span class="keyword">for</span> Jupyter notebook to become available .........</span><br><span class="line"></span><br><span class="line">Path to jupyter notebook: https://www.floydhub.com:8000/qZZ9edM2ktxxrRogYgQRpN</span><br><span class="line"></span><br><span class="line">To view logs enter:</span><br><span class="line">    floyd logs qUKFxLZEuQsM5FZDgGxaL5</span><br></pre></td></tr></table></figure>
+<p>通过 <code>Path to jupyter notebook:...</code> 的链接即可访问你的 notebook 了。记得不用的时候及时关闭。可以在后台管理里面点击 shutdown 关闭，也可以执行 <code>floyd stop qUKFxLZEuQsM5FZDgGxaL5</code> 关闭。</p>
+<h1 id="第二部分-概念及命令介绍"><a href="#第二部分-概念及命令介绍" class="headerlink" title="第二部分 概念及命令介绍"></a>第二部分 概念及命令介绍</h1><h2 id="floyd-管理"><a href="#floyd-管理" class="headerlink" title="floyd 管理"></a>floyd 管理</h2><p>恭喜，你已经知道如何在 floyd 上执行代码了。接下来介绍下 floyd 的管理逻辑。先看看以下几个概念：</p>
+<ul>
+<li><p>project （项目）</p>
+<p>  我们执行 <code>floyd init hello</code> 就是初始化了 hello 项目。</p>
+</li>
+<li><p>experiments （实验）</p>
+<p>  实验是在项目基础上进行的，为了让项目输出结果最佳，我们需要做很多次实验，所以一个项目可能有 N 个关联的实验。</p>
+</li>
+<li><p>module （模块）</p>
+<p>  这个是 floyd 提供的公共模块，具体如何使用，还不清楚。</p>
+</li>
+<li><p>Data （数据）</p>
+<p>  数据有两种，可能是我们上传，也可能是实验时生成的。</p>
+</li>
+</ul>
+<p>接下来分别介绍它们如何管理</p>
+<h3 id="项目管理"><a href="#项目管理" class="headerlink" title="项目管理"></a>项目管理</h3><table>
+<thead>
+<tr>
+<th>描述</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目初始化</td>
+<td><code>floyd init project_name</code></td>
+</tr>
+<tr>
+<td>查看项目实验</td>
+<td><code>floyd status</code></td>
+</tr>
+</tbody>
+</table>
+<p>很奇怪没有删除项目的命令，大部分命令都是基于实验的。</p>
+<h3 id="实验管理"><a href="#实验管理" class="headerlink" title="实验管理"></a>实验管理</h3><table>
+<thead>
+<tr>
+<th>描述</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>运行实验</td>
+<td><code>floyd run --mode jupyter</code></td>
+</tr>
+<tr>
+<td>删除实验</td>
+<td><code>floyd delete runid</code></td>
+</tr>
+<tr>
+<td>停止实验</td>
+<td><code>floyd stop runid</code></td>
+</tr>
+<tr>
+<td>实验信息</td>
+<td><code>floyd info runid</code></td>
+</tr>
+<tr>
+<td>实验日志</td>
+<td><code>floyd logs runid</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据管理"><a href="#数据管理" class="headerlink" title="数据管理"></a>数据管理</h3><table>
+<thead>
+<tr>
+<th>描述</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目数据</td>
+<td><code>floyd data status</code></td>
+</tr>
+<tr>
+<td>删除实验数据</td>
+<td><code>floyd data delete data_id</code></td>
+</tr>
+<tr>
+<td>初始化数据文件夹</td>
+<td><code>floyd data init data_name</code></td>
+</tr>
+<tr>
+<td>上传数据</td>
+<td><code>floyd data upload</code></td>
+</tr>
+<tr>
+<td>删除数据</td>
+<td><code>floyd data delete data_id</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="第三部分-用法"><a href="#第三部分-用法" class="headerlink" title="第三部分 用法"></a>第三部分 用法</h1><h2 id="自定义数据源"><a href="#自定义数据源" class="headerlink" title="自定义数据源"></a>自定义数据源</h2><h4 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h4><p>进入到需要上传的文件目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> mnist_data/</span><br><span class="line">floyd data init mnist-data</span><br><span class="line">floyd data upload</span><br></pre></td></tr></table></figure>
+<p>在实验中要使用这个数据，先要挂载到某个目录，然后将代码里数据读取路径改为该目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run --data GY3QRFFUA8KpbnqvroTPPW <span class="string">"ls -la /input/mnist-data"</span></span><br></pre></td></tr></table></figure>
+<p>使用多个数据源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run --data GY3QRFFUA8KpbnqvroTPPW:training --data 4T9bF6vtyvrHLdUsFbUumA:testing <span class="string">"python script.py"</span></span><br></pre></td></tr></table></figure>
+<p>会自动挂载到 <code>/training</code> 和 <code>/testing</code> 目录，如果不指定名字，则挂载到 <code>/GY3QRFFUA8KpbnqvroTPPW</code> 和 <code>/4T9bF6vtyvrHLdUsFbUumA</code> 目录。</p>
+<h4 id="把-output-作为下一个实验的数据源"><a href="#把-output-作为下一个实验的数据源" class="headerlink" title="把 output 作为下一个实验的数据源"></a>把 output 作为下一个实验的数据源</h4><p>可以看到使用数据源是需要得到代表数据的数据 id，如果能够获得上次实验的输出数据 id 就可以再次利用。使用方法如下：</p>
+<script src="//gist.github.com/owenju/143b22536997cd0757491e044206cf4d.js"></script>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="1-指定以-GPU-方式运行"><a href="#1-指定以-GPU-方式运行" class="headerlink" title="1. 指定以 GPU 方式运行"></a>1. 指定以 GPU 方式运行</h3><p>Hello World! 例子中实现在服务器运行代码功能，默认使用 CPU 运行。如果要使用 GPU 来训练模型，只需要加上 <code>--gpu</code> 可选项即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run --gpu <span class="string">'python hello.py'</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-指定-tensorflow-版本"><a href="#2-指定-tensorflow-版本" class="headerlink" title="2. 指定 tensorflow 版本"></a>2. 指定 tensorflow 版本</h3><p>开始在 floyd 上运行 <code>jupyter notebook</code> 时，提示版本太低，为了解决这个问题特意咨询了他们工程师，找到的方法是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">floyd run --mode jupyter --env tensorflow-1.0</span><br></pre></td></tr></table></figure>
+<h3 id="3-保存输出文件"><a href="#3-保存输出文件" class="headerlink" title="3. 保存输出文件"></a>3. 保存输出文件</h3><p>训练模型之后需要将模型文件保存到服务器供我们下载。如果不注意保存路径，训练完后无法找到任何输出文件，白白浪费了 GPU 资源。下面是训练 GPU 模型保存代码片段，需要将文件保存到 <code>/output/</code> 路径下才行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">saver = tf.train.Saver()</span><br><span class="line">save_path = saver.save(sess, <span class="string">"/output/conv_model"</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/" rel="next" title="Tensorflow 构建含有 Hidden Layer的Deep Neural Network">
+                <i class="fa fa-chevron-left"></i> Tensorflow 构建含有 Hidden Layer的Deep Neural Network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/17/the-relationship-between-expected-risk,-empirical-risk-and-structural-risk/" rel="prev" title="期望风险经验风险和结构风险的关系">
+                期望风险经验风险和结构风险的关系 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">鞠汶成</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一部分-入门"><span class="nav-number">1.</span> <span class="nav-text">第一部分 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-floyd-运行环境"><span class="nav-number">1.1.</span> <span class="nav-text">配置 floyd 运行环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目-Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">[项目] Hello World!</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-floyd-初始化工程"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用 floyd 初始化工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-floyd-执行代码"><span class="nav-number">1.2.2.</span> <span class="nav-text">在 floyd 执行代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看运行结果"><span class="nav-number">1.2.3.</span> <span class="nav-text">查看运行结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目-jupyter-notebook"><span class="nav-number">1.3.</span> <span class="nav-text">[项目] jupyter notebook</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二部分-概念及命令介绍"><span class="nav-number">2.</span> <span class="nav-text">第二部分 概念及命令介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#floyd-管理"><span class="nav-number">2.1.</span> <span class="nav-text">floyd 管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目管理"><span class="nav-number">2.1.1.</span> <span class="nav-text">项目管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验管理"><span class="nav-number">2.1.2.</span> <span class="nav-text">实验管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据管理"><span class="nav-number">2.1.3.</span> <span class="nav-text">数据管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三部分-用法"><span class="nav-number">3.</span> <span class="nav-text">第三部分 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义数据源"><span class="nav-number">3.1.</span> <span class="nav-text">自定义数据源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上传"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">上传</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#把-output-作为下一个实验的数据源"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">把 output 作为下一个实验的数据源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">3.2.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-指定以-GPU-方式运行"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 指定以 GPU 方式运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-指定-tensorflow-版本"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 指定 tensorflow 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-保存输出文件"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 保存输出文件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鞠汶成</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

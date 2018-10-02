@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一点说明如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 tmux 的快捷命令，老是记不住，但由于其在 ssh 和记录工作状态等优点，我选择记住他。  PS: 大家注意看这里的重点，由于原本的 &amp;lt;prefix&amp;gt;=ctrl+b 太难按了，所以我修改成了 &amp;lt;prefix&amp;gt;=ctrl+a 。如果你发现命令没反应，请确定环境里面的 &amp;lt;prefix&amp;gt;">
+<meta name="keywords" content="tmux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tmux 常用命令">
+<meta property="og:url" content="http://yoursite.com/2017/01/04/tmux-common-commands/index.html">
+<meta property="og:site_name" content="坏记性就要记">
+<meta property="og:description" content="一点说明如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 tmux 的快捷命令，老是记不住，但由于其在 ssh 和记录工作状态等优点，我选择记住他。  PS: 大家注意看这里的重点，由于原本的 &amp;lt;prefix&amp;gt;=ctrl+b 太难按了，所以我修改成了 &amp;lt;prefix&amp;gt;=ctrl+a 。如果你发现命令没反应，请确定环境里面的 &amp;lt;prefix&amp;gt;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-02T11:04:59.719Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tmux 常用命令">
+<meta name="twitter:description" content="一点说明如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 tmux 的快捷命令，老是记不住，但由于其在 ssh 和记录工作状态等优点，我选择记住他。  PS: 大家注意看这里的重点，由于原本的 &amp;lt;prefix&amp;gt;=ctrl+b 太难按了，所以我修改成了 &amp;lt;prefix&amp;gt;=ctrl+a 。如果你发现命令没反应，请确定环境里面的 &amp;lt;prefix&amp;gt;">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/01/04/tmux-common-commands/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>tmux 常用命令 | 坏记性就要记</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坏记性就要记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/tmux-common-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鞠汶成">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坏记性就要记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tmux 常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-04 16:14:07" itemprop="dateCreated datePublished" datetime="2017-01-04T16:14:07+08:00">2017-01-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-02 19:04:59" itemprop="dateModified" datetime="2018-10-02T19:04:59+08:00">2018-10-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tmux/" itemprop="url" rel="index"><span itemprop="name">tmux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一点说明"><a href="#一点说明" class="headerlink" title="一点说明"></a>一点说明</h2><p>如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 <code>tmux</code> 的快捷命令，老是记不住，但由于其在 <code>ssh</code> 和记录工作状态等优点，我选择记住他。</p>
+<blockquote>
+<p><strong>PS: 大家注意看这里的重点，由于原本的 <code>&lt;prefix&gt;=ctrl+b</code> 太难按了，所以我修改成了 <code>&lt;prefix&gt;=ctrl+a</code> 。如果你发现命令没反应，请确定环境里面的 <code>&lt;prefix&gt;</code> 是什么键</strong></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><code>session</code> 输入 <code>tmux</code> 命令后，打开的连接就是 <code>session</code></p>
+<p><code>window</code> 一个 <code>session</code> 可以打开多个窗口</p>
+<p><code>pane</code> 一个 <code>window</code> 又可以有多个 <code>pane</code> </p>
+<p>看着是有点复杂，多用用就好了</p>
+<h2 id="session"><a href="#session" class="headerlink" title="session"></a>session</h2><h3 id="创建一个session"><a href="#创建一个session" class="headerlink" title="创建一个session"></a>创建一个session</h3><p>如果你在终端一直输入 <code>tmux</code> ，那么每次打开都会创建一个新的 <code>session</code> ，怎么知道是新创建的呢？进入 <code>tmux</code> 后，输入 <code>&lt;prefix&gt; s</code> ，我把 <code>&lt;prefix&gt;</code> 修改成了 <code>ctrl+a / ^a</code> ，所以整个命令序列是 <code>ctrl+a s</code> ，注意有个空格，代表输入 <code>s</code> 时不用按住 <code>ctrl</code> 键。回车后可以看到有多个窗口，通过 <code>jk</code> 键选择不同的窗口。</p>
+<h3 id="打开一个已经存在的session"><a href="#打开一个已经存在的session" class="headerlink" title="打开一个已经存在的session"></a>打开一个已经存在的session</h3><p><code>tmux</code> 一个很有用的功能就是能够记住你的工作状态，比如今天晚上在这个状态下没有完成的工作，明天打开终端直接恢复出来，便于延续思路。那么如何操作呢？首先要学会</p>
+<ol>
+<li>创建一个自己命名的 <code>session</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux new -s sessionName</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>对已经存在的 <code>session</code> 修改名字</li>
+</ol>
+<p>在 <code>tmux</code> 模式下输入以下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;prefix&gt; $</span><br></pre></td></tr></table></figure>
+<p>好了，进入正题，如何打开一个已命名的 <code>session</code> 呢，输入 <code>tmux a -t sessionName</code></p>
+<h3 id="清理session"><a href="#清理session" class="headerlink" title="清理session"></a>清理session</h3><p>开始的时候特别困惑，又是 <code>session</code> ，又是 <code>window</code> ，还有 <code>pane</code> 的，把整个 tmux 弄得乱七八糟的，想恢复成最开始的状态，又不知道如何做。告诉你，可以输入 <code>&lt;prefix&gt; :kill-server</code> ，回车过后一切都安静了</p>
+<h3 id="保存session（暂时离开session回到终端）"><a href="#保存session（暂时离开session回到终端）" class="headerlink" title="保存session（暂时离开session回到终端）"></a>保存session（暂时离开session回到终端）</h3><p>有时需要我返回终端操作，但是又不想关闭 <code>session</code> 怎么办呢，可以输入 <code>&lt;prefix&gt; d</code>，暂时离开。输入打开指定 <code>session</code> 命令又回到了原来的状态。爽~~~</p>
+<h2 id="window"><a href="#window" class="headerlink" title="window"></a>window</h2><h3 id="创建window"><a href="#创建window" class="headerlink" title="创建window"></a>创建window</h3><p><code>session</code> 可以有多个 <code>window</code> ，你可以在不同的 <code>window</code> 间来回切换处理不同的工作，快捷键是 <code>&lt;prefix&gt; n</code> 。如何创建呢，输入`<prefix> c</prefix></p>
+<h3 id="删除window"><a href="#删除window" class="headerlink" title="删除window"></a>删除window</h3><p><code>&lt;prefix&gt; &amp;</code></p>
+<h3 id="重命名window"><a href="#重命名window" class="headerlink" title="重命名window"></a>重命名window</h3><p><code>&lt;prefix&gt; ,</code></p>
+<p>好像直接贴出了快捷键，其实只要大家理解了三个东西的概念之后，快捷键就是熟练的过程。</p>
+<h3 id="搜搜window"><a href="#搜搜window" class="headerlink" title="搜搜window"></a>搜搜window</h3><p>还可以在多个 <code>window</code> 之间搜索，真是太贴心了</p>
+<p><code>&lt;prefix&gt; f</code></p>
+<h2 id="Pane"><a href="#Pane" class="headerlink" title="Pane"></a>Pane</h2><p>说实话，我认为 <code>pane</code> 很酷，在一个屏幕下可以显示多个面板，比如一个面板写代码，一个运行结果，想想多觉得有用。</p>
+<h3 id="水平创建面板"><a href="#水平创建面板" class="headerlink" title="水平创建面板"></a>水平创建面板</h3><p><code>&lt;prefix&gt; |</code></p>
+<h3 id="垂直创建面板"><a href="#垂直创建面板" class="headerlink" title="垂直创建面板"></a>垂直创建面板</h3><p><code>&lt;prefix&gt; -</code></p>
+<h3 id="顺序选择不同的面板"><a href="#顺序选择不同的面板" class="headerlink" title="顺序选择不同的面板"></a>顺序选择不同的面板</h3><p><code>&lt;prefix&gt; o</code></p>
+<h3 id="左右上下切换不同面板"><a href="#左右上下切换不同面板" class="headerlink" title="左右上下切换不同面板"></a>左右上下切换不同面板</h3><p><code>&lt;prefix&gt; {</code> 左或者上面切换</p>
+<p><code>&lt;prefix&gt; }</code> 右或者下面切换</p>
+<h3 id="删除面板"><a href="#删除面板" class="headerlink" title="删除面板"></a>删除面板</h3><p><code>&lt;prefix&gt; x</code></p>
+<h3 id="更换面板排版"><a href="#更换面板排版" class="headerlink" title="更换面板排版"></a>更换面板排版</h3><p><code>&lt;prefix&gt; &lt;space&gt;</code> 建议自己尝试看效果</p>
+<h3 id="移动面板到window"><a href="#移动面板到window" class="headerlink" title="移动面板到window"></a>移动面板到window</h3><p><code>&lt;prefix&gt; !</code> 会将面板移动到一个新的 <code>window</code> 里面</p>
+<h3 id="移动面板到存在的window"><a href="#移动面板到存在的window" class="headerlink" title="移动面板到存在的window"></a>移动面板到存在的window</h3><p><code>&lt;prefix&gt; :join-pane -t window-name</code></p>
+<h3 id="显示面板编号"><a href="#显示面板编号" class="headerlink" title="显示面板编号"></a>显示面板编号</h3><p><code>&lt;prefix&gt; q</code></p>
+<h2 id="使用手册"><a href="#使用手册" class="headerlink" title="使用手册"></a>使用手册</h2><p>列出来的东西毕竟是有限的，如果忘记了快捷键怎么办，</p>
+<ol>
+<li><code>&lt;prefix&gt; ?</code> 看看，多看几遍就熟悉了。</li>
+<li>在终端输入 <code>tmux</code> ，按 <code>&lt;tab&gt;</code> 会显示出命令列表</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tmux/" rel="tag"># tmux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/31/golang-syntax-rules/" rel="next" title="Golang语法规则">
+                <i class="fa fa-chevron-left"></i> Golang语法规则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/05/go-compiles-cross-platform-runtime-packages/" rel="prev" title="go编译跨平台可运行包">
+                go编译跨平台可运行包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">鞠汶成</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一点说明"><span class="nav-number">1.</span> <span class="nav-text">一点说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session"><span class="nav-number">3.</span> <span class="nav-text">session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个session"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开一个已经存在的session"><span class="nav-number">3.2.</span> <span class="nav-text">打开一个已经存在的session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清理session"><span class="nav-number">3.3.</span> <span class="nav-text">清理session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存session（暂时离开session回到终端）"><span class="nav-number">3.4.</span> <span class="nav-text">保存session（暂时离开session回到终端）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window"><span class="nav-number">4.</span> <span class="nav-text">window</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建window"><span class="nav-number">4.1.</span> <span class="nav-text">创建window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除window"><span class="nav-number">4.2.</span> <span class="nav-text">删除window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重命名window"><span class="nav-number">4.3.</span> <span class="nav-text">重命名window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜搜window"><span class="nav-number">4.4.</span> <span class="nav-text">搜搜window</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pane"><span class="nav-number">5.</span> <span class="nav-text">Pane</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#水平创建面板"><span class="nav-number">5.1.</span> <span class="nav-text">水平创建面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直创建面板"><span class="nav-number">5.2.</span> <span class="nav-text">垂直创建面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序选择不同的面板"><span class="nav-number">5.3.</span> <span class="nav-text">顺序选择不同的面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#左右上下切换不同面板"><span class="nav-number">5.4.</span> <span class="nav-text">左右上下切换不同面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除面板"><span class="nav-number">5.5.</span> <span class="nav-text">删除面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更换面板排版"><span class="nav-number">5.6.</span> <span class="nav-text">更换面板排版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动面板到window"><span class="nav-number">5.7.</span> <span class="nav-text">移动面板到window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动面板到存在的window"><span class="nav-number">5.8.</span> <span class="nav-text">移动面板到存在的window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示面板编号"><span class="nav-number">5.9.</span> <span class="nav-text">显示面板编号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用手册"><span class="nav-number">6.</span> <span class="nav-text">使用手册</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鞠汶成</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

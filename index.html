@@ -298,7 +298,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/2017-06-23-wei-uitableviewcell-she-zhi-bei-jing-de-fang-fa/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/research-on-login-status-of-tencent-im-and-business-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -317,7 +317,166 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/23/2017-06-23-wei-uitableviewcell-she-zhi-bei-jing-de-fang-fa/" itemprop="url">
+                <a class="post-title-link" href="/2018/10/02/research-on-login-status-of-tencent-im-and-business-system/" itemprop="url">
+                  腾讯IM和业务系统登录状态研究
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-02 19:02:37 / 修改时间：23:18:51" itemprop="dateCreated datePublished" datetime="2018-10-02T19:02:37+08:00">2018-10-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2>背景</h2>
+<p>项目中需要集成聊天功能，综合评估后选择了腾讯IM（PS：手机端的SDK没有网易做的好，要想网易学习啊～）。如果在多台手机上登录会强制踢出上次登录。而我们的业务场景没有必要开启多终端登录功能，因此不在本文讨论范围。我们原本的系统有套登录机制，要保证业务的正确性，需要保证腾讯IM的登录状态和业务系统的登录状态保持一致。
+另外，项目中集成的是腾讯IM demo提供的代码，没有基于腾讯IM接口开发一套IM系统。</p>
+<h2>分析</h2>
+<p>背景介绍完毕，在继续分析之前还需要了解腾讯IM的踢出感知模式。</p>
+<p>&lt;!-- more --&gt;</p>
+<h3>腾讯IM感知模式</h3>
+<p>腾讯IM有两种感知模式，为了方便描述，将使用同一个账户的两次登录行为定义为A和B，A和B视为两台不同的设备；以下所说“应用”为集成了腾讯IM的应用。</p>
+<ul>
+<li>用户在线互踢：用户在设备A登录后，应用保持在前台，用户在设备B登录；</li>
+<li>用户离线互踢：用户在设备B登录后，应用退出，用户在设备B登录。</li>
+</ul>
+<p>第一种情况，设备A会立马收到事件通知已经被踢调，应用监听到此事件后，会清掉存储在设备A中的登录信息，并切换成未登录状态。
+第二种情况，设备A在下一次启动登录IM的时候，无法登录成功，返回错误代码6208，原因是腾讯IM添加了“强制感知模式”，即要让用户知道，上次是被踢出去了,需要再次调用login方法才能登录成功。下面是引用自腾讯IM的文档：</p>
+<p><blockquote><p>用户离线状态互踢：如下图所示，用户在设备 1 登录，没有进行 logout 情况下进程退出（此时可接收 iOS 远程推送消息）。该用户在设备 2 登录，此时由于用户不在线，无法感知此事件，为了显式提醒用户，避免无感知的互踢，用户在设备 1 重新登录时，会返回 ERR_IMSDK_KICKED_BY_OTHERS：6208 错误码，表明之前被踢，是否需要把对方踢下线。如果需要，则再次调用 login 强制上线，设备 2 的登录的实例将会收到 onForceOffline 回调。</p>
+<footer><strong>腾讯IM</strong><cite><a href="https://0x9.me/C3zdh" target="_blank" rel="noopener">0x9.me/C3zdh</a></cite></footer></blockquote></p>
+<p><img src="https://avc.qcloud.com/wiki2.0/im/imgs/20151015021702_68733.png" alt=""></p>
+<h3>业务系统的感知模式</h3>
+<p>对于我们的业务系统，感知是否被踢的方式是发起任意一次需要用户登录校验的请求，如果登录失效，系统会返回特定的错误代码，客户端即可知道被踢出去。</p>
+<p>对于第一种情况，可以在收到通知后，清空本地登录信息；对于第二种清空，可以在</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/method-of-setting-background-for-uitableviewcell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鞠汶成">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坏记性就要记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/23/method-of-setting-background-for-uitableviewcell/" itemprop="url">
                   为UITableViewCell设置背景的方法
                 </a>
               
@@ -361,7 +520,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:37:33" itemprop="dateModified" datetime="2018-10-01T23:37:33+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -398,7 +557,7 @@
           <h2 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h2><p>这个问题已经遇到很久了，没有认真的去解决过，最近想把懂的和模糊的东西都过一遍，加深对它们的理解。正好翻到这个问题，于是做了一番尝试。<br>我们使用 <code>UITableViewCell</code> 时，默认会有一个选中效果，点击之后会出现灰色背景，默认情况下是选中整个 cell 的，另外系统提供了几个可选项，如果它们都不符合预期就得自己定义了。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/23/2017-06-23-wei-uitableviewcell-she-zhi-bei-jing-de-fang-fa/#more" rel="contents">
+            <a class="btn" href="/2017/06/23/method-of-setting-background-for-uitableviewcell/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -454,7 +613,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/2017-06-23-git-refusing-to-merge-unrelated-histories/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/23/git-conflict-resolution-method-for-first-time-submission/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -473,7 +632,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/23/2017-06-23-git-refusing-to-merge-unrelated-histories/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/23/git-conflict-resolution-method-for-first-time-submission/" itemprop="url">
                   Git 首次提交时冲突解决方法
                 </a>
               
@@ -517,7 +676,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:38:22" itemprop="dateModified" datetime="2018-10-01T23:38:22+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -572,7 +731,7 @@
           <p>在远端创建一个项目，选中使用README初始化项目。同时在本地创建一个项目，创建文件并提交修改。<br>此时想将本地的代码和远程仓库进行绑定，在执行 <code>git remote add origin remote-repo-url</code> 后，执行 <code>git pull origin master</code> 提示错误</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/23/2017-06-23-git-refusing-to-merge-unrelated-histories/#more" rel="contents">
+            <a class="btn" href="/2017/06/23/git-conflict-resolution-method-for-first-time-submission/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -628,7 +787,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/2017-06-20-jin-cheng-he-xian-cheng-de-li-jie/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/process-and-thread-understanding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -647,7 +806,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/20/2017-06-20-jin-cheng-he-xian-cheng-de-li-jie/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/20/process-and-thread-understanding/" itemprop="url">
                   进程和线程的理解
                 </a>
               
@@ -691,7 +850,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 22:46:31" itemprop="dateModified" datetime="2018-10-01T22:46:31+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -735,7 +894,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/20/2017-06-20-jin-cheng-he-xian-cheng-de-li-jie/#more" rel="contents">
+            <a class="btn" href="/2017/06/20/process-and-thread-understanding/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -791,7 +950,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/17/2017-06-17-qi-wang-feng-xian-jing-yan-feng-xian-he-jie-gou-feng-xian-de-guan-xi/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/17/the-relationship-between-expected-risk,-empirical-risk-and-structural-risk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -810,7 +969,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/17/2017-06-17-qi-wang-feng-xian-jing-yan-feng-xian-he-jie-gou-feng-xian-de-guan-xi/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/17/the-relationship-between-expected-risk,-empirical-risk-and-structural-risk/" itemprop="url">
                   期望风险经验风险和结构风险的关系
                 </a>
               
@@ -854,7 +1013,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 22:48:19" itemprop="dateModified" datetime="2018-10-01T22:48:19+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -910,7 +1069,7 @@
 <p>比如对于某个样本 &lt;$$x_i$$,$$y_i$$&gt; ，选择的模型函数假设为 $$f$$，那么对该样本的预测值是$$f(x_i)$$，损失函数就是用来表示 $$ y_i $$ 和 $$ f(x_i) $$ 之间的差距的，我们用 $$L(f(x_i), y_i) $$ 来衡量。优化的目标就是让 $$ L $$ 足够小，代表预测值足够接近实际值。常见的损失函数有如下几个：<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/06/17/2017-06-17-qi-wang-feng-xian-jing-yan-feng-xian-he-jie-gou-feng-xian-de-guan-xi/#more" rel="contents">
+            <a class="btn" href="/2017/06/17/the-relationship-between-expected-risk,-empirical-risk-and-structural-risk/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -966,7 +1125,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/2017-05-12-floyd-shi-yong-jiao-cheng/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/floyd-usage-tutorial/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -985,7 +1144,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/12/2017-05-12-floyd-shi-yong-jiao-cheng/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/12/floyd-usage-tutorial/" itemprop="url">
                   Floyd 使用教程
                 </a>
               
@@ -1029,7 +1188,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 22:52:18" itemprop="dateModified" datetime="2018-10-01T22:52:18+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1088,7 +1247,7 @@
 <p>因此，自己买不了好的显卡，只能用别人的资源，当然是有偿使用哈。加入 <a href="https://www.udacity.com" target="_blank" rel="noopener">Udacity</a> 课程后，收到 <a href="https://aws.amazon.com" target="_blank" rel="noopener">AWS</a> 云服务器的 $100 优惠券，可以直接使用的。按照课程介绍创建了 G2 型服务器，操作起来有点复杂，价格也不便宜。后来在论坛里看到 <a href="https://www.floydhub.com/" target="_blank" rel="noopener">Floyd</a> 的介绍，又去申请注册了账户，能领取 100 小时的免费 GPU 使用。目前为止使用体验不错，特记录下使用过程中遇到的问题。（申请账户的过程就省略了）</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/12/2017-05-12-floyd-shi-yong-jiao-cheng/#more" rel="contents">
+            <a class="btn" href="/2017/05/12/floyd-usage-tutorial/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1144,7 +1303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/2017-05-10-tensorflow-gou-jian-han-you-hidden-layer-de-deep-neural-network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1163,7 +1322,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/10/2017-05-10-tensorflow-gou-jian-han-you-hidden-layer-de-deep-neural-network/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/" itemprop="url">
                   Tensorflow 构建含有 Hidden Layer的Deep Neural Network
                 </a>
               
@@ -1207,7 +1366,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 22:54:16" itemprop="dateModified" datetime="2018-10-01T22:54:16+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1262,7 +1421,7 @@
           <p>上一篇<a href="!--￼10--&gt;/2017/05/09/tensorflow-gou-jian-deep-neural-network/">Tensorflow 构建 Deep Nueral Network</a>讲了如何构造一个最简单的 neural network，并给出了在我本机的实验结果数据，识别的精度最高达到了 89.6 %。已经取得了不错的成绩，至少比随机猜测的准确率高很多。本文将在 input layer 和 output layer 之间添加一个 hidden layer。看看精度会不会提高。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/10/2017-05-10-tensorflow-gou-jian-han-you-hidden-layer-de-deep-neural-network/#more" rel="contents">
+            <a class="btn" href="/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1318,7 +1477,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-nueral-network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/tensorflow-building-deep-neural-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1337,7 +1496,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-nueral-network/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/09/tensorflow-building-deep-neural-network/" itemprop="url">
                   tensorflow 构建 deep neural network
                 </a>
               
@@ -1381,7 +1540,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:07:01" itemprop="dateModified" datetime="2018-10-01T23:07:01+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1420,7 +1579,7 @@
 <p>没有 hidden layer ，只有 input layer 和 output layer ，是不是很简洁。我们将用 tensorflow 创建这个网络。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-nueral-network/#more" rel="contents">
+            <a class="btn" href="/2017/05/09/tensorflow-building-deep-neural-network/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1476,7 +1635,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-neural-network/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/tensorflow-building-deep-neural-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1495,7 +1654,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-neural-network/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/09/tensorflow-building-deep-neural-network/" itemprop="url">
                   tensorflow 构建 deep neural network
                 </a>
               
@@ -1539,7 +1698,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:06:52" itemprop="dateModified" datetime="2018-10-01T23:06:52+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1578,7 +1737,7 @@
 <p>没有 hidden layer ，只有 input layer 和 output layer ，是不是很简洁。我们将用 tensorflow 创建这个网络。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/09/2017-05-09-tensorflow-gou-jian-deep-neural-network/#more" rel="contents">
+            <a class="btn" href="/2017/05/09/tensorflow-building-deep-neural-network/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1634,7 +1793,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/2017-05-09-ren-shi-mnist-shu-ju-ji/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/09/understanding-mnist-data-sets/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1653,7 +1812,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/09/2017-05-09-ren-shi-mnist-shu-ju-ji/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/09/understanding-mnist-data-sets/" itemprop="url">
                   认识 mnist 数据集
                 </a>
               
@@ -1697,7 +1856,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:06:43" itemprop="dateModified" datetime="2018-10-01T23:06:43+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1734,181 +1893,7 @@
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>最近在复习 Udacity 课程的知识，动手写模型后发现存在很多问题。所以打算整理思路重头再来，把遇到的问题，疑惑和理解都记录下来。从哪儿开始呢，仔细思考后决定从数据集下手，后面都围绕实际项目展开话题，项目又都依赖于数据，结论就顺利成章的出来了。当然我不会从头开始把原始数据封装成项目需要的数据类型，就用 <a href="https://www.tensorflow.org/" target="_blank" rel="noopener">tensorflow</a> 提供工具类即可。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/09/2017-05-09-ren-shi-mnist-shu-ju-ji/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/06/2017-01-06-go-yu-yan-interface-shi-xian/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鞠汶成">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坏记性就要记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/06/2017-01-06-go-yu-yan-interface-shi-xian/" itemprop="url">
-                  Go语言interface实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-01-06 11:56:52" itemprop="dateCreated datePublished" datetime="2017-01-06T11:56:52+08:00">2017-01-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-01 23:06:09" itemprop="dateModified" datetime="2018-10-01T23:06:09+08:00">2018-10-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/go-lang/" itemprop="url" rel="index"><span itemprop="name">go-lang</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="聊两句"><a href="#聊两句" class="headerlink" title="聊两句"></a>聊两句</h2><p><code>go</code> 里面的 <code>interface</code> 和 <code>java</code> 概念类似，即定义一组能力，让不同类（类型）去实现它，这样可以用父类调用子类方法设计出优秀的代码。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/06/2017-01-06-go-yu-yan-interface-shi-xian/#more" rel="contents">
+            <a class="btn" href="/2017/05/09/understanding-mnist-data-sets/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1996,7 +1981,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

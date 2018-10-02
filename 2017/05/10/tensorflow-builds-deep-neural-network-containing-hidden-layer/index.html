@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="上一篇Tensorflow 构建 Deep Nueral Network讲了如何构造一个最简单的 neural network，并给出了在我本机的实验结果数据，识别的精度最高达到了 89.6 %。已经取得了不错的成绩，至少比随机猜测的准确率高很多。本文将在 input layer 和 output layer 之间添加一个 hidden layer。看看精度会不会提高。">
+<meta name="keywords" content="Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow 构建含有 Hidden Layer的Deep Neural Network">
+<meta property="og:url" content="http://yoursite.com/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/index.html">
+<meta property="og:site_name" content="坏记性就要记">
+<meta property="og:description" content="上一篇Tensorflow 构建 Deep Nueral Network讲了如何构造一个最简单的 neural network，并给出了在我本机的实验结果数据，识别的精度最高达到了 89.6 %。已经取得了不错的成绩，至少比随机猜测的准确率高很多。本文将在 input layer 和 output layer 之间添加一个 hidden layer。看看精度会不会提高。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-10-02T11:02:46.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow 构建含有 Hidden Layer的Deep Neural Network">
+<meta name="twitter:description" content="上一篇Tensorflow 构建 Deep Nueral Network讲了如何构造一个最简单的 neural network，并给出了在我本机的实验结果数据，识别的精度最高达到了 89.6 %。已经取得了不错的成绩，至少比随机猜测的准确率高很多。本文将在 input layer 和 output layer 之间添加一个 hidden layer。看看精度会不会提高。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Tensorflow 构建含有 Hidden Layer的Deep Neural Network | 坏记性就要记</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">坏记性就要记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/tensorflow-builds-deep-neural-network-containing-hidden-layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鞠汶成">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坏记性就要记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tensorflow 构建含有 Hidden Layer的Deep Neural Network
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-10 14:40:17" itemprop="dateCreated datePublished" datetime="2017-05-10T14:40:17+08:00">2017-05-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇<a href="!--￼10--&gt;/2017/05/09/tensorflow-gou-jian-deep-neural-network/">Tensorflow 构建 Deep Nueral Network</a>讲了如何构造一个最简单的 neural network，并给出了在我本机的实验结果数据，识别的精度最高达到了 89.6 %。已经取得了不错的成绩，至少比随机猜测的准确率高很多。本文将在 input layer 和 output layer 之间添加一个 hidden layer。看看精度会不会提高。</p>
+<a id="more"></a>
+<h2 id="准备数据"><a href="#准备数据" class="headerlink" title="准备数据"></a>准备数据</h2><h3 id="载入数据"><a href="#载入数据" class="headerlink" title="载入数据"></a>载入数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 one_hot 设为 False , 标签则会输出数字 </span></span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./MNIST_data"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment">### 引入必要的包</span></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
+<h2 id="构建网络"><a href="#构建网络" class="headerlink" title="构建网络"></a>构建网络</h2><h3 id="超参数（hyper-parameter）"><a href="#超参数（hyper-parameter）" class="headerlink" title="超参数（hyper parameter）"></a>超参数（hyper parameter）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">50</span></span><br><span class="line">display_step = <span class="number">2</span></span><br><span class="line">learning_rate = <span class="number">0.03</span></span><br><span class="line">training_epochs = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h3 id="输入和输出值（input-amp-output-value）"><a href="#输入和输出值（input-amp-output-value）" class="headerlink" title="输入和输出值（input &amp; output value）"></a>输入和输出值（input &amp; output value）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>, <span class="number">784</span>])</span><br><span class="line">y = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="变量值-variables"><a href="#变量值-variables" class="headerlink" title="变量值 (variables)"></a>变量值 (variables)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建输入层（input layer）和隐藏层（hidden layer）的weight和bias变量</span></span><br><span class="line">w = tf.Variable(tf.truncated_normal([<span class="number">784</span>, <span class="number">512</span>]), name=<span class="string">'w'</span>)</span><br><span class="line">b = tf.Variable(tf.zeros([<span class="number">512</span>]), name=<span class="string">'b'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建隐藏层（hidden layer）和输出层（output layer）的weight和bias变量</span></span><br><span class="line">w1 = tf.Variable(tf.truncated_normal([<span class="number">512</span>, <span class="number">10</span>]), name=<span class="string">'w1'</span>)</span><br><span class="line">b1 = tf.Variable(tf.zeros([<span class="number">10</span>]), name=<span class="string">'b1'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="假设值-hypothesis"><a href="#假设值-hypothesis" class="headerlink" title="假设值 (hypothesis)"></a>假设值 (hypothesis)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算隐藏层（hidden layer），添加 sigmoid 激活函数</span></span><br><span class="line">h_z = tf.nn.bias_add(tf.matmul(x, w), b)</span><br><span class="line">h_a = tf.sigmoid(h_z)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算输出层（output layer）假设值，后面会调用 softmax_cross_entropy_with_logits  </span></span><br><span class="line"><span class="comment"># 所以不用添加 softmax 激活函数</span></span><br><span class="line">o_z = tf.nn.bias_add(tf.matmul(h_a,w1), b1)</span><br></pre></td></tr></table></figure>
+<h3 id="损耗函数（cost-function）"><a href="#损耗函数（cost-function）" class="headerlink" title="损耗函数（cost function）"></a>损耗函数（cost function）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=o_z, labels=y))</span><br></pre></td></tr></table></figure>
+<h3 id="优化器（optimizer）"><a href="#优化器（optimizer）" class="headerlink" title="优化器（optimizer）"></a>优化器（optimizer）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)</span><br></pre></td></tr></table></figure>
+<h3 id="精度校验值（accuracy）"><a href="#精度校验值（accuracy）" class="headerlink" title="精度校验值（accuracy）"></a>精度校验值（accuracy）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">correct_prediction = tf.equal(tf.argmax(tf.nn.softmax(o_z),<span class="number">1</span>), tf.argmax(y,<span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</span><br></pre></td></tr></table></figure>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">        avg_cost = <span class="number">0.</span></span><br><span class="line">        total_batch = mnist.train.num_examples // batch_size</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_images, batch_labels = mnist.train.next_batch(batch_size)</span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_images,</span><br><span class="line">                                                          y: batch_labels&#125;)</span><br><span class="line">            avg_cost += c / total_batch</span><br><span class="line">        <span class="keyword">if</span> (epoch +<span class="number">1</span>) % display_step == <span class="number">0</span>:</span><br><span class="line">            acc = sess.run(accuracy, feed_dict=&#123;x: mnist.test.images[:<span class="number">3000</span>],</span><br><span class="line">                                                y: mnist.test.labels[:<span class="number">3000</span>]&#125;)</span><br><span class="line">            print(<span class="string">"Epoch: "</span>, <span class="string">'%04d'</span> % (epoch+<span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">"&#123;:.9f&#125;"</span>.format(avg_cost),</span><br><span class="line">                <span class="string">"accuracy : &#123;:.3f&#125;"</span>.format(acc))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"Optimization Finished!"</span>)</span><br><span class="line">    saver = tf.train.Saver()</span><br><span class="line">    save_path = saver.save(sess, <span class="string">"./sess.p"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><script src="//gist.github.com/juwencheng/716a8b43c80ea29856b5b13669a6347c.js"></script>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>耐心的等待训练结果，最高识别率到达了 92.7 % 相当不错的成绩。</p>
+<pre><code>CPU times: user 2h 52min 27s, sys: 22min 17s, total: 3h 14min 44s
+Wall time: 20min 31s
+</code></pre>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/09/tensorflow-building-deep-neural-network/" rel="next" title="tensorflow 构建 deep neural network">
+                <i class="fa fa-chevron-left"></i> tensorflow 构建 deep neural network
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/12/floyd-usage-tutorial/" rel="prev" title="Floyd 使用教程">
+                Floyd 使用教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">鞠汶成</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备数据"><span class="nav-number">1.</span> <span class="nav-text">准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#载入数据"><span class="nav-number">1.1.</span> <span class="nav-text">载入数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建网络"><span class="nav-number">2.</span> <span class="nav-text">构建网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数（hyper-parameter）"><span class="nav-number">2.1.</span> <span class="nav-text">超参数（hyper parameter）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入和输出值（input-amp-output-value）"><span class="nav-number">2.2.</span> <span class="nav-text">输入和输出值（input &amp; output value）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量值-variables"><span class="nav-number">2.3.</span> <span class="nav-text">变量值 (variables)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假设值-hypothesis"><span class="nav-number">2.4.</span> <span class="nav-text">假设值 (hypothesis)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损耗函数（cost-function）"><span class="nav-number">2.5.</span> <span class="nav-text">损耗函数（cost function）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化器（optimizer）"><span class="nav-number">2.6.</span> <span class="nav-text">优化器（optimizer）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#精度校验值（accuracy）"><span class="nav-number">2.7.</span> <span class="nav-text">精度校验值（accuracy）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练"><span class="nav-number">2.8.</span> <span class="nav-text">训练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">3.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">4.</span> <span class="nav-text">结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鞠汶成</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+  
+  
+  <script src="/lib/pangu/dist/pangu.min.js?v=3.3"></script>
+  <script type="text/javascript">pangu.spacingPage();</script>
+
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
