@@ -298,7 +298,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/2017-01-05-go-bian-yi-kua-ping-tai-ke-yun-xing-bao/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/06/interface-implementation-of-go-language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -317,8 +317,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/05/2017-01-05-go-bian-yi-kua-ping-tai-ke-yun-xing-bao/" itemprop="url">
-                  go编译跨平台可运行包
+                <a class="post-title-link" href="/2017/01/06/interface-implementation-of-go-language/" itemprop="url">
+                  Go语言interface实现
                 </a>
               
             
@@ -344,7 +344,7 @@
                 
               
 
-              <time title="创建时间：2017-01-05 20:37:26" itemprop="dateCreated datePublished" datetime="2017-01-05T20:37:26+08:00">2017-01-05</time>
+              <time title="创建时间：2017-01-06 11:56:52" itemprop="dateCreated datePublished" datetime="2017-01-06T11:56:52+08:00">2017-01-06</time>
             
 
             
@@ -361,7 +361,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:06:02" itemprop="dateModified" datetime="2018-10-01T23:06:02+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -413,11 +413,10 @@
 
       
         
-          <h2 id="在mac上编译在linux下可运行方法"><a href="#在mac上编译在linux下可运行方法" class="headerlink" title="在mac上编译在linux下可运行方法"></a>在mac上编译在linux下可运行方法</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=linux GOARCH=amd64 go build -o hello.exe hello.go</span><br></pre></td></tr></table></figure>
-<h2 id="在mac上编译在window下可运行方法"><a href="#在mac上编译在window下可运行方法" class="headerlink" title="在mac上编译在window下可运行方法"></a>在mac上编译在window下可运行方法</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=windows GOARCH=386 go build -o hello.exe hello.go</span><br></pre></td></tr></table></figure>
+          <h2 id="聊两句"><a href="#聊两句" class="headerlink" title="聊两句"></a>聊两句</h2><p><code>go</code> 里面的 <code>interface</code> 和 <code>java</code> 概念类似，即定义一组能力，让不同类（类型）去实现它，这样可以用父类调用子类方法设计出优秀的代码。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/05/2017-01-05-go-bian-yi-kua-ping-tai-ke-yun-xing-bao/#more" rel="contents">
+            <a class="btn" href="/2017/01/06/interface-implementation-of-go-language/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -473,7 +472,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/2017-01-04-tmux-chang-yong-ming-ling/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/05/go-compiles-cross-platform-runtime-packages/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -492,7 +491,182 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/01/04/2017-01-04-tmux-chang-yong-ming-ling/" itemprop="url">
+                <a class="post-title-link" href="/2017/01/05/go-compiles-cross-platform-runtime-packages/" itemprop="url">
+                  go编译跨平台可运行包
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-01-05 20:37:26" itemprop="dateCreated datePublished" datetime="2017-01-05T20:37:26+08:00">2017-01-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/go-lang/" itemprop="url" rel="index"><span itemprop="name">go-lang</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="在mac上编译在linux下可运行方法"><a href="#在mac上编译在linux下可运行方法" class="headerlink" title="在mac上编译在linux下可运行方法"></a>在mac上编译在linux下可运行方法</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=linux GOARCH=amd64 go build -o hello.exe hello.go</span><br></pre></td></tr></table></figure>
+<h2 id="在mac上编译在window下可运行方法"><a href="#在mac上编译在window下可运行方法" class="headerlink" title="在mac上编译在window下可运行方法"></a>在mac上编译在window下可运行方法</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=windows GOARCH=386 go build -o hello.exe hello.go</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/05/go-compiles-cross-platform-runtime-packages/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/tmux-common-commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鞠汶成">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="坏记性就要记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/04/tmux-common-commands/" itemprop="url">
                   tmux 常用命令
                 </a>
               
@@ -536,7 +710,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:05:56" itemprop="dateModified" datetime="2018-10-01T23:05:56+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:04:59" itemprop="dateModified" datetime="2018-10-02T19:04:59+08:00">2018-10-02</time>
               
             
           </span>
@@ -594,7 +768,7 @@
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/01/04/2017-01-04-tmux-chang-yong-ming-ling/#more" rel="contents">
+            <a class="btn" href="/2017/01/04/tmux-common-commands/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -650,7 +824,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/31/2016-12-31-go-yu-fa-gui-ze/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/31/golang-syntax-rules/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -669,7 +843,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/31/2016-12-31-go-yu-fa-gui-ze/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/31/golang-syntax-rules/" itemprop="url">
                   Golang语法规则
                 </a>
               
@@ -713,7 +887,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:05:36" itemprop="dateModified" datetime="2018-10-01T23:05:36+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -768,7 +942,7 @@
           <h2 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h2><p>函数名、变量名、常量名、类型名、语句标号和包名等都遵循一个简单的规则：一个名字必须以一个字母（Unicode字母）或下划线开头，后面可以跟任意数量的字母、数字或下划线。大小写敏感。名字开头字母大小写决定了名字的可见性，大写字母开头的名字可以被外部包访问（和java里面的public相似），小写字母开头只能在当前包可见。命名方式以驼峰方式；缩写词（如HTML）全部大写。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/31/2016-12-31-go-yu-fa-gui-ze/#more" rel="contents">
+            <a class="btn" href="/2016/12/31/golang-syntax-rules/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -824,7 +998,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/2016-12-27-centos7-an-zhuang-tmux/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/27/centos-7-install-tmux/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -843,7 +1017,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/27/2016-12-27-centos7-an-zhuang-tmux/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/27/centos-7-install-tmux/" itemprop="url">
                   CentOS 7安装tmux
                 </a>
               
@@ -887,7 +1061,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:05:21" itemprop="dateModified" datetime="2018-10-01T23:05:21+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -943,7 +1117,7 @@
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>因为个人使用的服务器是CentOS ，故介绍在此系统下的安装</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/27/2016-12-27-centos7-an-zhuang-tmux/#more" rel="contents">
+            <a class="btn" href="/2016/12/27/centos-7-install-tmux/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -999,7 +1173,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/25/2016-12-25-shan-chu-uisearchbar-he-uinavigationbar-de-1-xiang-su-fang-fa/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/25/delete-the-1-pixel-method-of-uisearchbar-and-uinavigationbar./">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1018,7 +1192,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/25/2016-12-25-shan-chu-uisearchbar-he-uinavigationbar-de-1-xiang-su-fang-fa/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/25/delete-the-1-pixel-method-of-uisearchbar-and-uinavigationbar./" itemprop="url">
                   删除 UISearchBar 和 UINavigationBar 的 1 像素方法
                 </a>
               
@@ -1062,7 +1236,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:05:00" itemprop="dateModified" datetime="2018-10-01T23:05:00+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1117,7 +1291,7 @@
           <p>项目中为了美观，需要删除 <code>UISearchBar</code> 和 <code>UINavigationBar</code> 的 1 像素黑线，具体解决方法如下：</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/25/2016-12-25-shan-chu-uisearchbar-he-uinavigationbar-de-1-xiang-su-fang-fa/#more" rel="contents">
+            <a class="btn" href="/2016/12/25/delete-the-1-pixel-method-of-uisearchbar-and-uinavigationbar./#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1173,7 +1347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/2016-12-23-fan-yi-kafak-introduction/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/23/translation-kafak-introduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1192,7 +1366,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/23/2016-12-23-fan-yi-kafak-introduction/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/23/translation-kafak-introduction/" itemprop="url">
                   翻译 kafak introduction 
                 </a>
               
@@ -1236,7 +1410,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:04:47" itemprop="dateModified" datetime="2018-10-01T23:04:47+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1297,7 +1471,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/23/2016-12-23-fan-yi-kafak-introduction/#more" rel="contents">
+            <a class="btn" href="/2016/12/23/translation-kafak-introduction/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1353,7 +1527,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/2016-12-22-centos7-an-zhuang-shadowscoks/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/centos-7-install-shadowscoks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1372,7 +1546,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/22/2016-12-22-centos7-an-zhuang-shadowscoks/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/22/centos-7-install-shadowscoks/" itemprop="url">
                   CentOS 7 安装 shadowscoks 
                 </a>
               
@@ -1416,7 +1590,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:04:40" itemprop="dateModified" datetime="2018-10-01T23:04:40+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1472,7 +1646,7 @@
 <h1 id="安装Shadowsocks"><a href="#安装Shadowsocks" class="headerlink" title="安装Shadowsocks"></a>安装Shadowsocks</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install --upgrade pip</span><br><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/22/2016-12-22-centos7-an-zhuang-shadowscoks/#more" rel="contents">
+            <a class="btn" href="/2016/12/22/centos-7-install-shadowscoks/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1528,7 +1702,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/2016-12-22-centos-an-zhuang-proxychains-ke-zai-ming-ling-xing-shi-yong-shadowsocks/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1547,7 +1721,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/22/2016-12-22-centos-an-zhuang-proxychains-ke-zai-ming-ling-xing-shi-yong-shadowsocks/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./" itemprop="url">
                   CentOS 安装 proxychains 可在命令行使用 shadowsocks 
                 </a>
               
@@ -1591,7 +1765,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:04:30" itemprop="dateModified" datetime="2018-10-01T23:04:30+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1647,7 +1821,7 @@
 <p>最好的方法是让终端的网络可以通过 shadowsocks 代理访问。通过 Google 搜索到<code>proxychains</code><a href="[proxychains](http://proxychains.sourceforge.net/)">^1</a> 可以解决这个问题。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/22/2016-12-22-centos-an-zhuang-proxychains-ke-zai-ming-ling-xing-shi-yong-shadowsocks/#more" rel="contents">
+            <a class="btn" href="/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1703,7 +1877,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/2016-12-21-double-counting-ling-ren-yi-huo-de-ji-suan-fang-fa/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/the-puzzling-calculation-method-of-double-counting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -1722,7 +1896,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/12/21/2016-12-21-double-counting-ling-ren-yi-huo-de-ji-suan-fang-fa/" itemprop="url">
+                <a class="post-title-link" href="/2016/12/21/the-puzzling-calculation-method-of-double-counting/" itemprop="url">
                   Double Counting 令人疑惑的计算方法
                 </a>
               
@@ -1766,7 +1940,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-01 23:04:21" itemprop="dateModified" datetime="2018-10-01T23:04:21+08:00">2018-10-01</time>
+                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
               
             
           </span>
@@ -1807,185 +1981,7 @@
 <p>翻译成中文是，我从父母那儿分别借了 50 元（美元），花了 97 元买了一个包，还剩下 3 元，分别还了父母 1 元，此时，我手里面有 1 元，欠父母 49 元，总共 49*2+1=99 ，还有 1 元去哪儿了</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2016/12/21/2016-12-21-double-counting-ling-ren-yi-huo-de-ji-suan-fang-fa/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/20/2016-12-20-vim-surround-shi-yong-shuo-ming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鞠汶成">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="坏记性就要记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/20/2016-12-20-vim-surround-shi-yong-shuo-ming/" itemprop="url">
-                  vim-surround使用说明
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2016-12-20 09:25:45" itemprop="dateCreated datePublished" datetime="2016-12-20T09:25:45+08:00">2016-12-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-10-01 23:04:00" itemprop="dateModified" datetime="2018-10-01T23:04:00+08:00">2018-10-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Vim使用技巧/" itemprop="url" rel="index"><span itemprop="name">Vim使用技巧</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>vim-surround</code><a href="[vim-surround](https://github.com/tpope/vim-surround)">^1</a> 是一个十分强大的插件，项目主页的介绍如下</p>
-<blockquote>
-<p>Surround.vim is all about “surroundings”: parentheses, brackets, quotes, XML tags, and more. The plugin provides mappings to easily delete, change and add such surroundings in pairs.</p>
-</blockquote>
-<p>“surroundings” 包括：中括号，花括号，大括号，引号，XML 标签，HTML 标签等。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/12/20/2016-12-20-vim-surround-shi-yong-shuo-ming/#more" rel="contents">
+            <a class="btn" href="/2016/12/21/the-puzzling-calculation-method-of-double-counting/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2073,7 +2069,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
