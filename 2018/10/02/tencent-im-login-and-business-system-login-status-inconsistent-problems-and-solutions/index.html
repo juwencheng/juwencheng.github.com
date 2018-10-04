@@ -112,25 +112,27 @@
 
 
 
-  <meta name="description" content="国内墙的原因导致很多资源没法访问，通过 shadowsocks 在一定程度上可以解决，但通过终端执行时资源还是无法请求，除非使用全局 VPN 。使用 VPN 的弊端在于，如果使用的是远端服务器，一旦连上 VPN ，将会断开 SSH 连接（这下就尴尬）。 最好的方法是让终端的网络可以通过 shadowsocks 代理访问。通过 Google 搜索到proxychains^1 可以解决这个问题。">
-<meta name="keywords" content="CentOS,shadowsocks">
+  <meta name="description" content="背景项目中需要使用聊天功能，综合评估后选用腾讯IM。为了保证业务的正确性，需要保证用户任意时间点在腾讯IM和业务系统的登录状态一致。因此需要考虑多点登录相互踢的情况。当然，腾讯提供了多设备同时登录的解决方案，由于自身业务场景没有这方面的需要，多设备同时登录不在本文讨论范围。另外，项目使用了“最小代价”的集成方式，直接将腾讯IM demo移植到项目中，这并不影响问题的讨论。 问题我们遇到的问题是，同">
+<meta name="keywords" content="关键字">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CentOS 安装 proxychains 可在命令行使用 shadowsocks ">
-<meta property="og:url" content="http://yoursite.com/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./index.html">
+<meta property="og:title" content="腾讯IM登录和业务系统登录状态不一致问题及解决方法">
+<meta property="og:url" content="http://yoursite.com/2018/10/02/tencent-im-login-and-business-system-login-status-inconsistent-problems-and-solutions/index.html">
 <meta property="og:site_name" content="坏记性就要记">
-<meta property="og:description" content="国内墙的原因导致很多资源没法访问，通过 shadowsocks 在一定程度上可以解决，但通过终端执行时资源还是无法请求，除非使用全局 VPN 。使用 VPN 的弊端在于，如果使用的是远端服务器，一旦连上 VPN ，将会断开 SSH 连接（这下就尴尬）。 最好的方法是让终端的网络可以通过 shadowsocks 代理访问。通过 Google 搜索到proxychains^1 可以解决这个问题。">
+<meta property="og:description" content="背景项目中需要使用聊天功能，综合评估后选用腾讯IM。为了保证业务的正确性，需要保证用户任意时间点在腾讯IM和业务系统的登录状态一致。因此需要考虑多点登录相互踢的情况。当然，腾讯提供了多设备同时登录的解决方案，由于自身业务场景没有这方面的需要，多设备同时登录不在本文讨论范围。另外，项目使用了“最小代价”的集成方式，直接将腾讯IM demo移植到项目中，这并不影响问题的讨论。 问题我们遇到的问题是，同">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-02T11:02:46.364Z">
+<meta property="og:image" content="https://avc.qcloud.com/wiki2.0/im/imgs/20151015021702_68733.png">
+<meta property="og:updated_time" content="2018-10-04T13:13:19.937Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CentOS 安装 proxychains 可在命令行使用 shadowsocks ">
-<meta name="twitter:description" content="国内墙的原因导致很多资源没法访问，通过 shadowsocks 在一定程度上可以解决，但通过终端执行时资源还是无法请求，除非使用全局 VPN 。使用 VPN 的弊端在于，如果使用的是远端服务器，一旦连上 VPN ，将会断开 SSH 连接（这下就尴尬）。 最好的方法是让终端的网络可以通过 shadowsocks 代理访问。通过 Google 搜索到proxychains^1 可以解决这个问题。">
+<meta name="twitter:title" content="腾讯IM登录和业务系统登录状态不一致问题及解决方法">
+<meta name="twitter:description" content="背景项目中需要使用聊天功能，综合评估后选用腾讯IM。为了保证业务的正确性，需要保证用户任意时间点在腾讯IM和业务系统的登录状态一致。因此需要考虑多点登录相互踢的情况。当然，腾讯提供了多设备同时登录的解决方案，由于自身业务场景没有这方面的需要，多设备同时登录不在本文讨论范围。另外，项目使用了“最小代价”的集成方式，直接将腾讯IM demo移植到项目中，这并不影响问题的讨论。 问题我们遇到的问题是，同">
+<meta name="twitter:image" content="https://avc.qcloud.com/wiki2.0/im/imgs/20151015021702_68733.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./"/>
+  <link rel="canonical" href="http://yoursite.com/2018/10/02/tencent-im-login-and-business-system-login-status-inconsistent-problems-and-solutions/"/>
 
 
 
@@ -140,7 +142,7 @@
   };
 </script>
 
-  <title>CentOS 安装 proxychains 可在命令行使用 shadowsocks  | 坏记性就要记</title>
+  <title>腾讯IM登录和业务系统登录状态不一致问题及解决方法 | 坏记性就要记</title>
   
 
 
@@ -301,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/22/centos-installation-proxychains-can-use-shadowsocks-in-the-command-line./">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/02/tencent-im-login-and-business-system-login-status-inconsistent-problems-and-solutions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鞠汶成">
@@ -318,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">CentOS 安装 proxychains 可在命令行使用 shadowsocks 
+          <h1 class="post-title" itemprop="name headline">腾讯IM登录和业务系统登录状态不一致问题及解决方法
               
             
           </h1>
@@ -343,7 +345,7 @@
                 
               
 
-              <time title="创建时间：2016-12-22 11:44:19" itemprop="dateCreated datePublished" datetime="2016-12-22T11:44:19+08:00">2016-12-22</time>
+              <time title="创建时间：2018-10-02 19:02:37" itemprop="dateCreated datePublished" datetime="2018-10-02T19:02:37+08:00">2018-10-02</time>
             
 
             
@@ -360,29 +362,11 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-02 19:02:46" itemprop="dateModified" datetime="2018-10-02T19:02:46+08:00">2018-10-02</time>
+                <time title="修改时间：2018-10-04 21:13:19" itemprop="dateModified" datetime="2018-10-04T21:13:19+08:00">2018-10-04</time>
               
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -411,17 +395,23 @@
       
 
       
-        <p>国内墙的原因导致很多资源没法访问，通过 shadowsocks 在一定程度上可以解决，但通过终端执行时资源还是无法请求，除非使用全局 VPN 。使用 VPN 的弊端在于，如果使用的是远端服务器，一旦连上 VPN ，将会断开 SSH 连接（这下就尴尬）。</p>
-<p>最好的方法是让终端的网络可以通过 shadowsocks 代理访问。通过 Google 搜索到<code>proxychains</code><a href="[proxychains](http://proxychains.sourceforge.net/)">^1</a> 可以解决这个问题。</p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目中需要使用聊天功能，综合评估后选用腾讯IM。为了保证业务的正确性，需要保证用户任意时间点在腾讯IM和业务系统的登录状态一致。因此需要考虑多点登录相互踢的情况。当然，腾讯提供了多设备同时登录的解决方案，由于自身业务场景没有这方面的需要，多设备同时登录不在本文讨论范围。<br>另外，项目使用了“最小代价”的集成方式，直接将腾讯IM demo移植到项目中，这并不影响问题的讨论。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>我们遇到的问题是，同一用户在设备A上登录后，退出软件，然后在设备B上登录。此时打开设备A上软件，业务系统会检测到用户在其他设备登录，清空本地登录信息。用户输入账户信息重新登录，业务系统可以登录成功，腾讯IM登录失败。在设备B上可以正常使用聊天功能，设备A上可以进行与账户相关的操作，但是无法收到最新的聊天信息。</p>
 <a id="more"></a>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="apt-get-安装"><a href="#apt-get-安装" class="headerlink" title="apt-get 安装"></a>apt-get 安装</h2><h2 id="源码编译安装"><a href="#源码编译安装" class="headerlink" title="源码编译安装"></a>源码编译安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">clone</span> 源代码到本地</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入proxychains文件夹</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行./configure</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> make</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo make install</span></span><br><span class="line"></span><br><span class="line">git clone https://github.com/haad/proxychains.git</span><br><span class="line"></span><br><span class="line">cd proxychains</span><br><span class="line"></span><br><span class="line">./configure</span><br><span class="line"></span><br><span class="line">make </span><br><span class="line"></span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>github 上给出了查找配置文件的顺序，本文使用的是在 <code>$(HOME)</code> 目录下新建 <code>.proxychains/</code> 的方式，具体步骤如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建~/.proxychains文件夹</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 拷贝配置文件到~/.proxychains</span></span><br><span class="line"></span><br><span class="line">mkdir ~/.proxychains</span><br><span class="line"></span><br><span class="line">cp src/proxychains.conf ~/.proxychains/</span><br></pre></td></tr></table></figure>
-<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>如果在本机安装了 shadowsock ，并且在配置文件中设置了正确的端口，那么就可以进行测试了。如果没有安装 shadowsocks ，请看这篇文章</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains telnet www.google.com</span><br></pre></td></tr></table></figure>
-<p>或者直接将 <code>bash</code> 设置代理，不过在 mac 上没有测试成功。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 bash</span><br><span class="line">wget https://www.google.com</span><br></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1>
+<h2 id="感知方式"><a href="#感知方式" class="headerlink" title="感知方式"></a>感知方式</h2><p>为了更好的找到结合的解决方案，需要先了解腾讯IM的踢出感知模式，你也可以通过腾讯IM的文档详细了解，本文截取部分关键内容，也是因为阅读文档时对这部分内容没有足够重视，致使IM相关问题频发。接下来介绍IM和业务系统登录被踢的感知方式</p>
+<h3 id="腾讯IM感知方式"><a href="#腾讯IM感知方式" class="headerlink" title="腾讯IM感知方式"></a>腾讯IM感知方式</h3><p>腾讯IM有两种感知方式，为了方便描述，将使用同一个账户的两次登录行为定义为A和B，A和B视为两台不同的设备；以下所说“应用”为集成了腾讯IM的应用。</p>
+<ul>
+<li>用户在线互踢：用户在设备A登录后，<strong>应用保持在前台</strong>，用户在设备B登录；</li>
+<li>用户离线互踢：用户在设备B登录后，<strong>应用退出</strong>，用户在设备B登录。</li>
+</ul>
+<p>第一种情况，由于设备A保持在前台，会立马收到被踢掉的通知（通过回调方法知晓），应用监听到此事件后，会清掉存储在设备A中的登录信息，并切换成未登录状态。<br>第二种情况，<strong>由于设备A并为在前台，在被踢掉时设备A并不知晓。在设备A启动应用登录IM的时候，会返回错误代码6208，原因是腾讯IM添加了“强制感知模式”，即要让用户知道，上次是被踢出去了，需要再次调用login方法才能登录成功</strong>。下面是引用自腾讯IM的文档：</p>
+<blockquote><p>用户离线状态互踢：如下图所示，用户在设备 1 登录，没有进行 logout 情况下进程退出（此时可接收 iOS 远程推送消息）。该用户在设备 2 登录，此时由于用户不在线，无法感知此事件，为了显式提醒用户，避免无感知的互踢，用户在设备 1 重新登录时，会返回 ERR_IMSDK_KICKED_BY_OTHERS：6208 错误码，表明之前被踢，是否需要把对方踢下线。如果需要，则再次调用 login 强制上线，设备 2 的登录的实例将会收到 onForceOffline 回调。</p>
+<footer><strong>腾讯IM</strong><cite><a href="https://0x9.me/C3zdh" target="_blank" rel="noopener">0x9.me/C3zdh</a></cite></footer></blockquote>
+<p><img src="https://avc.qcloud.com/wiki2.0/im/imgs/20151015021702_68733.png" alt=""></p>
+<h3 id="业务系统的感知模式"><a href="#业务系统的感知模式" class="headerlink" title="业务系统的感知模式"></a>业务系统的感知模式</h3><p>对于我们的业务系统，感知是否被踢的方式是发起任意一次需要用户登录校验的请求，如果登录失效，系统会返回特定的错误代码，客户端即可知道被踢出去，进而清空本地登录信息，提示用户重新登录。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>至此，大家已经知道问题出现在什么地方了，忽略了第二种情况的特殊处理，只需要在登录失败返回6208状态码时再次调用login方法即可登录成功。</p>
+<p>问题终于解决，但前后花了很多时间去重现问题，定位问题，解决问题，最后还需要通过文档佐证解决方案。</p>
+
       
     </div>
 
@@ -439,14 +429,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
-          
-            <a href="/tags/shadowsocks/" rel="tag"># shadowsocks</a>
-          
-        </div>
-      
 
       
       
@@ -456,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/21/the-puzzling-calculation-method-of-double-counting/" rel="next" title="Double Counting 令人疑惑的计算方法">
-                <i class="fa fa-chevron-left"></i> Double Counting 令人疑惑的计算方法
+              <a href="/2017/06/23/method-of-setting-background-for-uitableviewcell/" rel="next" title="为UITableViewCell设置背景的方法">
+                <i class="fa fa-chevron-left"></i> 为UITableViewCell设置背景的方法
               </a>
             
           </div>
@@ -465,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/22/centos-7-install-shadowscoks/" rel="prev" title="CentOS 7 安装 shadowscoks ">
-                CentOS 7 安装 shadowscoks  <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -682,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#apt-get-安装"><span class="nav-number">1.1.</span> <span class="nav-text">apt-get 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码编译安装"><span class="nav-number">1.2.</span> <span class="nav-text">源码编译安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">3.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感知方式"><span class="nav-number">3.</span> <span class="nav-text">感知方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯IM感知方式"><span class="nav-number">3.1.</span> <span class="nav-text">腾讯IM感知方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#业务系统的感知模式"><span class="nav-number">3.2.</span> <span class="nav-text">业务系统的感知模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">4.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
             
 
           </div>
