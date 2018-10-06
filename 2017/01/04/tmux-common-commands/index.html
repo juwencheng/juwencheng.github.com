@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="坏记性就要记">
 <meta property="og:description" content="一点说明如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 tmux 的快捷命令，老是记不住，但由于其在 ssh 和记录工作状态等优点，我选择记住他。  PS: 大家注意看这里的重点，由于原本的 &amp;lt;prefix&amp;gt;=ctrl+b 太难按了，所以我修改成了 &amp;lt;prefix&amp;gt;=ctrl+a 。如果你发现命令没反应，请确定环境里面的 &amp;lt;prefix&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-02T11:04:59.719Z">
+<meta property="og:updated_time" content="2018-10-05T00:08:59.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tmux 常用命令">
 <meta name="twitter:description" content="一点说明如果一件事情每次都需要花费你很多时间，要么你记住它，要么你放弃它。对于 tmux 的快捷命令，老是记不住，但由于其在 ssh 和记录工作状态等优点，我选择记住他。  PS: 大家注意看这里的重点，由于原本的 &amp;lt;prefix&amp;gt;=ctrl+b 太难按了，所以我修改成了 &amp;lt;prefix&amp;gt;=ctrl+a 。如果你发现命令没反应，请确定环境里面的 &amp;lt;prefix&amp;gt;">
@@ -145,6 +145,15 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127070210-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-127070210-1');
+</script>
 
 
 
@@ -255,6 +264,14 @@
 
       
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
     </ul>
   
 
@@ -263,6 +280,33 @@
 
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
   
 </nav>
 
@@ -360,7 +404,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-02 19:04:59" itemprop="dateModified" datetime="2018-10-02T19:04:59+08:00">2018-10-02</time>
+                <time title="修改时间：2018-10-05 08:08:59" itemprop="dateModified" datetime="2018-10-05T08:08:59+08:00">2018-10-05</time>
               
             
           </span>
@@ -386,6 +430,18 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/04/tmux-common-commands/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/04/tmux-common-commands/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -434,15 +490,15 @@
 <p>好了，进入正题，如何打开一个已命名的 <code>session</code> 呢，输入 <code>tmux a -t sessionName</code></p>
 <h3 id="清理session"><a href="#清理session" class="headerlink" title="清理session"></a>清理session</h3><p>开始的时候特别困惑，又是 <code>session</code> ，又是 <code>window</code> ，还有 <code>pane</code> 的，把整个 tmux 弄得乱七八糟的，想恢复成最开始的状态，又不知道如何做。告诉你，可以输入 <code>&lt;prefix&gt; :kill-server</code> ，回车过后一切都安静了</p>
 <h3 id="保存session（暂时离开session回到终端）"><a href="#保存session（暂时离开session回到终端）" class="headerlink" title="保存session（暂时离开session回到终端）"></a>保存session（暂时离开session回到终端）</h3><p>有时需要我返回终端操作，但是又不想关闭 <code>session</code> 怎么办呢，可以输入 <code>&lt;prefix&gt; d</code>，暂时离开。输入打开指定 <code>session</code> 命令又回到了原来的状态。爽~~~</p>
-<h2 id="window"><a href="#window" class="headerlink" title="window"></a>window</h2><h3 id="创建window"><a href="#创建window" class="headerlink" title="创建window"></a>创建window</h3><p><code>session</code> 可以有多个 <code>window</code> ，你可以在不同的 <code>window</code> 间来回切换处理不同的工作，快捷键是 <code>&lt;prefix&gt; n</code> 。如何创建呢，输入`<prefix> c</prefix></p>
+<h2 id="window"><a href="#window" class="headerlink" title="window"></a>window</h2><h3 id="创建window"><a href="#创建window" class="headerlink" title="创建window"></a>创建window</h3><p><code>session</code> 可以有多个 <code>window</code> ，你可以在不同的 <code>window</code> 间来回切换处理不同的工作，快捷键是 <code>&lt;prefix&gt; n</code> 。如何创建呢，输入<code>&lt;prefix&gt; c</code></p>
 <h3 id="删除window"><a href="#删除window" class="headerlink" title="删除window"></a>删除window</h3><p><code>&lt;prefix&gt; &amp;</code></p>
 <h3 id="重命名window"><a href="#重命名window" class="headerlink" title="重命名window"></a>重命名window</h3><p><code>&lt;prefix&gt; ,</code></p>
 <p>好像直接贴出了快捷键，其实只要大家理解了三个东西的概念之后，快捷键就是熟练的过程。</p>
 <h3 id="搜搜window"><a href="#搜搜window" class="headerlink" title="搜搜window"></a>搜搜window</h3><p>还可以在多个 <code>window</code> 之间搜索，真是太贴心了</p>
 <p><code>&lt;prefix&gt; f</code></p>
 <h2 id="Pane"><a href="#Pane" class="headerlink" title="Pane"></a>Pane</h2><p>说实话，我认为 <code>pane</code> 很酷，在一个屏幕下可以显示多个面板，比如一个面板写代码，一个运行结果，想想多觉得有用。</p>
-<h3 id="水平创建面板"><a href="#水平创建面板" class="headerlink" title="水平创建面板"></a>水平创建面板</h3><p><code>&lt;prefix&gt; |</code></p>
-<h3 id="垂直创建面板"><a href="#垂直创建面板" class="headerlink" title="垂直创建面板"></a>垂直创建面板</h3><p><code>&lt;prefix&gt; -</code></p>
+<h3 id="水平创建面板"><a href="#水平创建面板" class="headerlink" title="水平创建面板"></a>水平创建面板</h3><p><code>&lt;prefix&gt; %</code></p>
+<h3 id="垂直创建面板"><a href="#垂直创建面板" class="headerlink" title="垂直创建面板"></a>垂直创建面板</h3><p><code>&lt;prefix&gt; &quot;</code></p>
 <h3 id="顺序选择不同的面板"><a href="#顺序选择不同的面板" class="headerlink" title="顺序选择不同的面板"></a>顺序选择不同的面板</h3><p><code>&lt;prefix&gt; o</code></p>
 <h3 id="左右上下切换不同面板"><a href="#左右上下切换不同面板" class="headerlink" title="左右上下切换不同面板"></a>左右上下切换不同面板</h3><p><code>&lt;prefix&gt; {</code> 左或者上面切换</p>
 <p><code>&lt;prefix&gt; }</code> 右或者下面切换</p>
@@ -522,6 +578,16 @@
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
 
   
 
@@ -690,6 +756,15 @@
           
 
           
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/yourname" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
 
           
           
@@ -735,7 +810,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2018</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -749,15 +824,9 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
 
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.2</div>
 
 
 
@@ -865,8 +934,27 @@
 
   
 
+  
+    <script id="dsq-count-scr" src="https://juwencheng-blog.disqus.com/count.js" async></script>
+  
 
-
+  
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/01/04/tmux-common-commands/';
+        this.page.identifier = '2017/01/04/tmux-common-commands/';
+        this.page.title = 'tmux 常用命令';
+        };
+      function loadComments () {
+        var d = document, s = d.createElement('script');
+        s.src = 'https://juwencheng-blog.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      }
+      
+        loadComments();
+      
+    </script>
   
 
 
@@ -878,9 +966,24 @@
 
 
 
+
+
   
 
 
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.4.2"></script>
 
 
 
